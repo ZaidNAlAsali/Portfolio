@@ -6,6 +6,7 @@ let cursorDot, cursorOutline;
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    initMobileNavigation();
     initCustomCursor();
     initLoadingScreen();
     initSmoothScrolling();
@@ -27,10 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize contact functionality
     initContactFunctionality();
+    initCopyActions();
 });
 
 // Custom Cursor
 function initCustomCursor() {
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+
     cursorDot = document.querySelector('.cursor');
     cursorOutline = document.querySelector('.cursor-follower');
     
@@ -543,6 +547,31 @@ function initAdvancedAnimations() {
     initTooltips();
 }
 
+function initMobileNavigation() {
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('#site-nav-links');
+
+    if (!toggle || !navLinks) return;
+
+    const closeMenu = () => {
+        navLinks.classList.remove('mobile-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('mobile-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+    });
+}
+
 // Enhanced tooltip system
 function initTooltips() {
     const tooltipElements = document.querySelectorAll('[data-tooltip]');
@@ -654,20 +683,6 @@ const additionalCSS = `
 const style = document.createElement('style');
 style.textContent = additionalCSS;
 document.head.appendChild(style);
-
-// Mobile optimizations
-if (window.innerWidth <= 768) {
-    // Disable cursor effects on mobile
-    const cursor = document.querySelector('.cursor');
-    const cursorFollower = document.querySelector('.cursor-follower');
-    if (cursor) cursor.style.display = 'none';
-    if (cursorFollower) cursorFollower.style.display = 'none';
-    
-    // Reduce particle count on mobile
-    if (typeof particleCount !== 'undefined') {
-        particleCount = 30;
-    }
-}
 
 // Performance optimizations
 function debounce(func, wait) {
@@ -902,7 +917,7 @@ function typeWriterEffect(element, text, speed = 50) {
 
 // Animated stats counters
 function initStatsCounters() {
-    const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+    const statNumbers = document.querySelectorAll('.stat-item .stat-number');
     
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -917,7 +932,8 @@ function initStatsCounters() {
 }
 
 function animateStatCounter(element) {
-    const target = parseInt(element.getAttribute('data-target'));
+    const target = parseInt(element.closest('.stat-item')?.getAttribute('data-target'));
+    if (!Number.isFinite(target)) return;
     const duration = 2000; // 2 seconds
     const increment = target / (duration / 16); // 60fps
     let current = 0;
@@ -1297,6 +1313,8 @@ function initCareerNavigator() {
     initTimelineControls();
     initExperienceCards();
     initTrajectoryAnimations();
+    initExperienceHoverEffects();
+    initTimelineFlow();
 }
 
 // Initialize career command interface
@@ -1586,123 +1604,15 @@ function initTimelineFlow() {
     });
 }
 
-// Add CSS animation for responsive behavior and mobile optimization
-function addCareerResponsiveStyles() {
-    const responsiveCSS = `
-        @media (max-width: 1024px) {
-            .career-navigator {
-                max-width: 95%;
-                margin: 0 auto;
-            }
-            
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .experience-card {
-                margin: 0 1.5rem !important;
-                padding: 1.5rem !important;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .navigator-terminal .terminal-header {
-                padding: 0.8rem 1rem;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .navigator-terminal .terminal-body {
-                padding: 1.5rem;
-            }
-            
-            .metrics-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .navigator-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .timeline-controls {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .experience-card {
-                margin: 0 1rem !important;
-                padding: 1.2rem !important;
-            }
-            
-            .timeline-connector {
-                left: 1rem;
-                transform: none;
-            }
-            
-            .node-marker {
-                left: 1rem;
-                transform: none;
-            }
-            
-            .trajectory-card {
-                margin: 0 1rem !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .position-badge {
-                padding: 0.3rem 0.6rem;
-                font-size: 0.7rem;
-            }
-            
-            .duration-chip {
-                padding: 0.2rem 0.5rem;
-                font-size: 0.7rem;
-            }
-            
-            .impact-highlight {
-                flex-direction: column;
-                text-align: center;
-                gap: 0.8rem;
-            }
-            
-            .metric-card {
-                padding: 1rem;
-            }
-            
-            .metric-value {
-                font-size: 2rem;
-            }
-        }
-    `;
-    
-    const styleElement = document.createElement('style');
-    styleElement.textContent = responsiveCSS;
-    document.head.appendChild(styleElement);
-}
+function initCopyActions() {
+    document.querySelectorAll('.copy-email-btn').forEach(button => {
+        button.addEventListener('click', copyEmail);
+    });
 
-// Initialize all career navigator functionality
-document.addEventListener('DOMContentLoaded', () => {
-    // Add career navigator to the initialization sequence
-    setTimeout(() => {
-        initCareerNavigator();
-        initExperienceHoverEffects();
-        initTimelineFlow();
-        addCareerResponsiveStyles();
-    }, 1500);
-    
-    // Also add to the main initialization in the existing DOMContentLoaded
-    const existingInit = document.querySelector('.hero');
-    if (existingInit) {
-        // Add initCareerNavigator to the existing initialization sequence
-        setTimeout(() => {
-            initCareerNavigator();
-        }, 2000);
-    }
-});
+    document.querySelectorAll('.copy-phone-btn').forEach(button => {
+        button.addEventListener('click', copyPhone);
+    });
+}
 
 // Contact Functionality
 function initContactFunctionality() {
