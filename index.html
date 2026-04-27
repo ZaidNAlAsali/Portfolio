@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Software engineer portfolio of Zaid AlAsali featuring projects, experience, and contact details for full-time and freelance opportunities.">
+    <meta property="og:title" content="Zaid AlAsali - Software Engineer & AI Architect">
+    <meta property="og:description" content="Explore selected projects, technical skills, and professional experience.">
+    <meta property="og:type" content="website">
     <title>Zaid AlAsali - Software Engineer & AI Architect</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 </head>
 <body>
     <!-- Custom Cursor -->
@@ -43,7 +46,7 @@
                 <span class="brand-text">ZAID.DEV</span>
                 <span class="brand-subtitle">SOFTWARE ENGINEER & AI SOLUTIONS</span>
             </div>
-            <div class="nav-links">
+            <div class="nav-links" id="site-nav-links">
                 <a href="#home" class="nav-link" data-text="HOME">HOME</a>
                 <a href="#about" class="nav-link" data-text="ABOUT">ABOUT</a>
                 <a href="#experience" class="nav-link" data-text="EXPERIENCE">EXPERIENCE</a>
@@ -51,11 +54,15 @@
                 <a href="#skills" class="nav-link" data-text="SKILLS">SKILLS</a>
                 <a href="#contact" class="nav-link" data-text="CONTACT">CONTACT</a>
             </div>
-            <div class="nav-toggle">
+            <button type="button" class="lang-toggle" aria-pressed="false" aria-label="Switch language to Arabic">
+                <span class="lang-option lang-en active">EN</span>
+                <span class="lang-option lang-ar">AR</span>
+            </button>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav-links" aria-label="Toggle navigation menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </nav>
     </header>
 
@@ -153,19 +160,19 @@
                             <span class="prompt-text">./connect_with_zaid</span>
                         </div>
                         <div class="social-links">
-                            <button type="button" class="social-link" data-tooltip="Copy Email" onclick="copyEmail()">
+                            <button type="button" class="social-link copy-email-btn" data-tooltip="Copy Email">
                                 <i class="fas fa-envelope"></i>
                                 <span>Email</span>
                             </button>
-                            <a href="https://github.com/zaidalasali" class="social-link" data-tooltip="GitHub Profile">
+                            <a href="https://github.com/zaidalasali" class="social-link" data-tooltip="GitHub Profile" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-github"></i>
                                 <span>GitHub</span>
                             </a>
-                            <a href="https://linkedin.com/in/zaidalasali" class="social-link" data-tooltip="LinkedIn">
+                            <a href="https://linkedin.com/in/zaidalasali" class="social-link" data-tooltip="LinkedIn" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-linkedin"></i>
                                 <span>LinkedIn</span>
                             </a>
-                            <button type="button" class="social-link" data-tooltip="Copy Phone" onclick="copyPhone()">
+                            <button type="button" class="social-link copy-phone-btn" data-tooltip="Copy Phone">
                                 <i class="fas fa-phone"></i>
                                 <span>Phone</span>
                             </button>
@@ -1491,7 +1498,7 @@
             <!-- View More Projects CTA -->
             <div class="projects-cta">
                 <p class="cta-text">Interested in seeing more of my work?</p>
-                <a href="https://github.com/zaidalasali" target="_blank" class="cta-btn">
+                <a href="https://github.com/zaidalasali" target="_blank" rel="noopener noreferrer" class="cta-btn">
                     <span>VIEW ALL PROJECTS</span>
                     <i class="fab fa-github"></i>
                 </a>
@@ -1519,7 +1526,7 @@
                                 <div class="contact-details">
                                     <h3>Email</h3>
                                     <p>ZaidNaderAlAsali@Outlook.com</p>
-                                    <button type="button" class="contact-action" onclick="copyEmail()">Send Message</button>
+                                    <button type="button" class="contact-action copy-email-btn">Send Message</button>
                                 </div>
                             </div>
                             
@@ -1530,7 +1537,7 @@
                                 <div class="contact-details">
                                     <h3>Phone</h3>
                                     <p>(+962) 079018174</p>
-                                    <a href="tel:+96207901814" class="contact-action">Call Now</a>
+                                    <a href="tel:+962079018174" class="contact-action">Call Now</a>
                                 </div>
                             </div>
                             
@@ -1552,7 +1559,7 @@
                                 <div class="contact-details">
                                     <h3>LinkedIn</h3>
                                     <p>Professional Network</p>
-                                    <a href="https://linkedin.com/in/zaidalasali" target="_blank" class="contact-action">Connect</a>
+                                    <a href="https://linkedin.com/in/zaidalasali" target="_blank" rel="noopener noreferrer" class="contact-action">Connect</a>
                                 </div>
                             </div>
                             
@@ -1563,7 +1570,7 @@
                                 <div class="contact-details">
                                     <h3>GitHub</h3>
                                     <p>Code Repository</p>
-                                    <a href="https://github.com/zaidalasali" target="_blank" class="contact-action">View Projects</a>
+                                    <a href="https://github.com/zaidalasali" target="_blank" rel="noopener noreferrer" class="contact-action">View Projects</a>
                                 </div>
                             </div>
                             
@@ -1612,7 +1619,7 @@
                                 </div>
                                 
                                 <div class="hire-actions">
-                                    <button type="button" class="cta-primary hire-btn" onclick="copyEmail()">
+                                    <button type="button" class="cta-primary hire-btn copy-email-btn">
                                         <span>HIRE ME NOW</span>
                                         <i class="fas fa-rocket"></i>
                                     </button>
@@ -1655,9 +1662,9 @@
                         <h3>Connect</h3>
                         <div class="links-grid">
                             <a href="mailto:ZaidNaderAlAsali@Outlook.com">Email</a>
-                            <a href="https://github.com/zaidalasali" target="_blank">GitHub</a>
-                            <a href="https://linkedin.com/in/zaidalasali" target="_blank">LinkedIn</a>
-                            <a href="tel:+96207901814">Phone</a>
+                            <a href="https://github.com/zaidalasali" target="_blank" rel="noopener noreferrer">GitHub</a>
+                            <a href="https://linkedin.com/in/zaidalasali" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                            <a href="tel:+962079018174">Phone</a>
                         </div>
                     </div>
                 </div>
@@ -1665,7 +1672,7 @@
             
             <div class="footer-bottom">
                 <div class="copyright">
-                    <p>&copy; 2025 Zaid AlAsali. All rights reserved.</p>
+                    <p>&copy; 2026 Zaid AlAsali. All rights reserved.</p>
                 </div>
                 <div class="motto">
                     <p class="motto-text">"Fortes fortuna iuvat" - Fortune favors the bold</p>
@@ -1674,8 +1681,6 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 

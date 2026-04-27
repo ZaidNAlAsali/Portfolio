@@ -33,7 +33,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: none;
+    cursor: auto;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -235,6 +235,9 @@ body {
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
+    background: transparent;
+    border: 0;
+    padding: 0.25rem;
 }
 
 .nav-toggle span {
@@ -247,6 +250,57 @@ body {
 .nav-links {
     display: flex;
     gap: 2rem;
+}
+
+.lang-toggle {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 0.15rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    min-width: 86px;
+    overflow: hidden;
+}
+
+.lang-toggle::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    width: calc(50% - 2px);
+    border-radius: 999px;
+    background: var(--accent-green);
+    transition: transform 0.2s ease;
+}
+
+.lang-toggle.is-arabic::before {
+    transform: translateX(100%);
+}
+
+.lang-option {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    padding: 0.22rem 0.45rem;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+}
+
+.lang-option.active {
+    color: #031403;
 }
 
 .nav-link {
@@ -4119,13 +4173,17 @@ body {
 
 @media (max-width: 768px) {
     .nav {
-        flex-direction: column;
-        gap: 1rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
         padding: 1rem;
     }
     
     .nav-links {
+        width: 100%;
         gap: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.5rem 0 0.25rem;
     }
     
     .hero {
@@ -4195,10 +4253,21 @@ body {
     
     .nav-toggle {
         display: flex;
+        margin-left: auto;
+    }
+
+    .lang-toggle {
+        order: 2;
+        margin-left: auto;
     }
     
     .nav-links {
         display: none;
+        order: 3;
+    }
+
+    .nav-links.mobile-open {
+        display: flex;
     }
 }
 
@@ -4245,4 +4314,18 @@ body {
 ::selection {
     background: rgba(0, 255, 65, 0.3);
     color: var(--text-primary);
-} 
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body {
+        cursor: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
