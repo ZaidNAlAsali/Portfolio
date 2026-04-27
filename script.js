@@ -7,7 +7,10 @@ let cursorDot, cursorOutline;
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initMobileNavigation();
+ codex/conduct-codebase-review-and-evaluation-65upqz
     initLanguageToggle();
+
+ main
     initCustomCursor();
     initLoadingScreen();
     initSmoothScrolling();
@@ -31,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactFunctionality();
     initCopyActions();
 });
+ codex/conduct-codebase-review-and-evaluation-65upqz
 
 function initLanguageToggle() {
     const languageToggle = document.querySelector('.lang-toggle');
@@ -112,6 +116,8 @@ function initLanguageToggle() {
         updateUI(nextLanguage);
     });
 }
+
+ main
 
 // Custom Cursor
 function initCustomCursor() {
