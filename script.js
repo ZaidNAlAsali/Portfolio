@@ -7,6 +7,10 @@ let cursorDot, cursorOutline;
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initMobileNavigation();
+ codex/conduct-codebase-review-and-evaluation-65upqz
+    initLanguageToggle();
+
+ main
     initCustomCursor();
     initLoadingScreen();
     initSmoothScrolling();
@@ -30,6 +34,90 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactFunctionality();
     initCopyActions();
 });
+ codex/conduct-codebase-review-and-evaluation-65upqz
+
+function initLanguageToggle() {
+    const languageToggle = document.querySelector('.lang-toggle');
+    if (!languageToggle) return;
+
+    const labels = {
+        en: {
+            home: 'HOME',
+            about: 'ABOUT',
+            experience: 'EXPERIENCE',
+            projects: 'PROJECTS',
+            skills: 'SKILLS',
+            contact: 'CONTACT',
+            hireMe: 'HIRE ME',
+            viewWork: 'VIEW WORK',
+            sectionAbout: 'ABOUT ME',
+            sectionProjects: 'FEATURED PROJECTS',
+            sectionContact: 'LET\'S BUILD SOMETHING AMAZING'
+        },
+        ar: {
+            home: 'الرئيسية',
+            about: 'نبذة',
+            experience: 'الخبرات',
+            projects: 'المشاريع',
+            skills: 'المهارات',
+            contact: 'التواصل',
+            hireMe: 'وظّفني',
+            viewWork: 'اعرض الأعمال',
+            sectionAbout: 'نبذة عني',
+            sectionProjects: 'مشاريع مميزة',
+            sectionContact: 'لنصنع شيئاً رائعاً'
+        }
+    };
+
+    const entries = [
+        ['#site-nav-links a[href="#home"]', 'home', true],
+        ['#site-nav-links a[href="#about"]', 'about', true],
+        ['#site-nav-links a[href="#experience"]', 'experience', true],
+        ['#site-nav-links a[href="#projects"]', 'projects', true],
+        ['#site-nav-links a[href="#skills"]', 'skills', true],
+        ['#site-nav-links a[href="#contact"]', 'contact', true],
+        ['.hero-actions .cta-primary span', 'hireMe', false],
+        ['.hero-actions .cta-secondary span', 'viewWork', false],
+        ['#about .section-title', 'sectionAbout', false],
+        ['#projects .section-title', 'sectionProjects', false],
+        ['#contact .section-title', 'sectionContact', false]
+    ];
+
+    const updateUI = (lang) => {
+        const isArabic = lang === 'ar';
+        document.documentElement.lang = isArabic ? 'ar' : 'en';
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+
+        languageToggle.setAttribute('aria-pressed', String(isArabic));
+        languageToggle.setAttribute('aria-label', isArabic ? 'Switch language to English' : 'Switch language to Arabic');
+        languageToggle.classList.toggle('is-arabic', isArabic);
+
+        languageToggle.querySelector('.lang-en')?.classList.toggle('active', !isArabic);
+        languageToggle.querySelector('.lang-ar')?.classList.toggle('active', isArabic);
+
+        entries.forEach(([selector, key, syncDataText]) => {
+            const element = document.querySelector(selector);
+            if (!element) return;
+            element.textContent = labels[lang][key];
+            if (syncDataText) {
+                element.setAttribute('data-text', labels[lang][key]);
+            }
+        });
+    };
+
+    const savedLanguage = localStorage.getItem('portfolioLanguage');
+    const initialLanguage = savedLanguage === 'ar' ? 'ar' : 'en';
+    updateUI(initialLanguage);
+
+    languageToggle.addEventListener('click', () => {
+        const currentLanguage = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+        const nextLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+        localStorage.setItem('portfolioLanguage', nextLanguage);
+        updateUI(nextLanguage);
+    });
+}
+
+ main
 
 // Custom Cursor
 function initCustomCursor() {
